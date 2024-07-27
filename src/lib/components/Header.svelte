@@ -1,0 +1,18 @@
+<!-- src/lib/components/Header.svelte -->
+<script>
+    export let user = null;
+  </script>
+  
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      {#if user}
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+      {:else}
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+      {/if}
+    </nav>
+  </header>
+  
