@@ -1,33 +1,24 @@
 <!-- src/routes/login/+page.svelte -->
 <script>
-    import { goto } from '$app/navigation';
-    import Header from '$lib/components/Header.svelte';
-    import Footer from '$lib/components/Footer.svelte';
-  
-    let email = '';
-    let password = '';
-  
-    async function handleSubmit() {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-      if (response.ok) {
-        goto('/dashboard');
-      }
-    }
+// @ts-nocheck
+
+    export let form;
   </script>
   
-  <Header />
-  <main>
-    <form on:submit|preventDefault={handleSubmit}>
-      <label for="email">Email</label>
-      <input id="email" type="email" bind:value={email} required />
-      <label for="password">Password</label>
-      <input id="password" type="password" bind:value={password} required />
-      <button type="submit">Login</button>
-    </form>
-  </main>
-  <Footer />
+  <h1>Login</h1>
+  <form method="POST" action="?/login">
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required />
+    </div>
+    <button type="submit">Login</button>
+  </form>
+  
+  {#if form?.errors}
+    <p style="color: red;">{form.errors.message}</p>
+  {/if}
   

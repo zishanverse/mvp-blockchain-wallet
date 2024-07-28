@@ -1,34 +1,46 @@
 <script>
-  import { goto } from '$app/navigation';
-  import Header from '$lib/components/Header.svelte';
-  import Footer from '$lib/components/Footer.svelte';
+  import { onMount } from 'svelte';
+  import { invalidate } from '$app/navigation';
 
+  let name = '';
   let email = '';
   let password = '';
+  let message = '';
 
-  async function handleSubmit() {
-    const response = await fetch('/api/auth/register', {
+  async function register() {
+    const res = await fetch('/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ name, email, password })
     });
-    if (response.ok) {
-      goto('/login');
+
+    if (res.ok) {
+      message = 'Registration successful!';
+      name = '';
+      email = '';
+      password = '';
     } else {
-      const result = await response.json();
-      alert(result.error);
+      message = 'Registration failed.';
     }
+
+    invalidate();
   }
 </script>
 
-<Header />
-<main>
-  <form on:submit|preventDefault={handleSubmit}>
-    <label for="email">Email</label>
-    <input id="email" type="email" bind:value={email} required />
-    <label for="password">Password</label>
-    <input id="password" type="password" bind:value={password} required />
-    <button type="submit">Register</button>
-  </form>
-</main>
-<Footer />
+<form on:submit|preventDefault={register}>
+  <label>
+    Name:
+    <input bind:value={name} type="text" required />
+  </label>
+  <label>
+    Email:
+    <input bind:value={email} type="email" required />
+  </label>
+  <label>
+    Password:
+    <input bind:value={password} type="password" required />
+  </label>
+  <button type="submit">Register</button>
+</form>
+
+<p>{message}</p>
