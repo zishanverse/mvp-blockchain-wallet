@@ -1,24 +1,34 @@
-// src/routes/login/+page.server.ts
-import { redirect, fail } from '@sveltejs/kit';
+import { redirect } from "@sveltejs/kit";
+import NeucronSDK from "neucron-sdk";
 
 export const actions = {
-  default: async ({ request }) => { // 'default' instead of 'login' to match POST method
-    const formData = await request.formData();
-    const email = formData.get('email');
-    const password = formData.get('password');
+  login: async ({ request }) => {
+    const data = await request.formData();
 
-    // Implement your login logic here. For example, you can verify the email and password
-    // against your database or an authentication service.
-    const isAuthenticated = email === 'user@example.com' && password === 'password123';
+    const neucron = new NeucronSDK();
 
-    if (isAuthenticated) {
-      // If authentication is successful, redirect to the dashboard or another protected route.
-      throw redirect(303, '/dashboard');
-    } else {
-      // If authentication fails, return an error response.
-      return fail(400, {
-        message: 'Invalid email or password'
+    const authModule = neucron.authentication;
+    const walletModule = neucron.wallet;
+
+    const loginResponse = await authModule.login({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
+
+    if (loginResponse.success) {
+      const DefaultWalletBalance = await walletModule.getWalletBalance({
+        userId: loginResponse.data.userId,
       });
+
+      return {
+        auth: true,
+        balance: DefaultWalletBalance.data.balance.summary,
+      };
+    } else {
+      return {
+        auth: false,
+        message: "Login failed. Please check your credentials.",
+      };
     }
-  }
+  },
 };
