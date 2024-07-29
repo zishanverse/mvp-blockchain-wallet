@@ -1,8 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { page } from '$app/stores';
   import { goto } from '$app/navigation';
-  import { get } from 'svelte/store'; // Ensure to import get from 'svelte/store'
 
   interface User {
     email: string;
@@ -18,7 +16,8 @@
     status: string;
   }
 
-  let user: User | null = null;
+  export let user: User | null;
+
   let balance: number = 0;
   let transactions: Transaction[] = [];
   let loading: boolean = true;
@@ -52,11 +51,6 @@
   }
 
   onMount(async () => {
-    // Fetch user data from the page store
-    const $pageStore = get(page);
-    user = $pageStore.data.user as User; // Ensure the user data is accessed correctly
-    console.log('User data:', user); // Add this line for debugging
-
     if (!user) {
       goto('/login');
     } else {

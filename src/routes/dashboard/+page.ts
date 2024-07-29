@@ -1,19 +1,15 @@
-// src/routes/dashboard/+page.ts
-import type { PageLoad } from './$types';
+export const load = async ({ fetch }) => {
+  try {
+    const response = await fetch('/api/user'); // Adjust to your actual endpoint
+    const data = await response.json();
 
-export const load: PageLoad = async ({ fetch, session }) => {
-  const user = session.user;
-
-  if (!user) {
-    return {
-      status: 302,
-      redirect: '/login'
-    };
-  }
-
-  return {
-    props: {
-      user
+    if (!data || !data.user) {
+      throw new Error('User data not found');
     }
-  };
+
+    return { user: data.user };
+  } catch (error) {
+    console.error('Error loading user data:', error);
+    return { user: null }; // or handle the error as needed
+  }
 };
