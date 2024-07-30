@@ -1,22 +1,19 @@
 // src/hooks.server.ts
 import type { Handle } from '@sveltejs/kit';
-import { db } from '$lib/database';
+import { verifyToken } from '$lib/auth'; // Ensure this path is correct
 
 export const handle: Handle = async ({ event, resolve }) => {
-  const sessionToken = event.cookies.get('session');
-  
-  if (sessionToken) {
+  const authHeader = event.request.headers.get('authorization');
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (token) {
     try {
-      const { rows } = await db.query('SELECT * FROM users WHERE session_token = $1', [sessionToken]);
-      const user = rows[0];
-      if (user) {
-        event.locals.user = user;
-      }
-    } catch (error) {
-      console.error('Error fetching user:', error);
+      const user = await verifyToken(token); // Your token verification logic
+      event.locals.user = user; // Populate locals.user with user info
+    } catch (err) {
+      console.error('Invalid token', err);
     }
   }
 
-  const response = await resolve(event);
-  return response;
+  return resolve(event);
 };
