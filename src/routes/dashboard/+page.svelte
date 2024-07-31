@@ -14,7 +14,7 @@
 
   let activeComponent = 'overview'; // Default to Wallet Overview
 
-  const setActiveComponent = (component) => {
+  const setActiveComponent = (component: string) => {
     activeComponent = component;
   };
 

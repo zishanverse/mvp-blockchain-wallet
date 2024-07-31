@@ -8,6 +8,10 @@
   onMount(async () => {
     try {
       const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('Authentication token not found');
+      }
+
       const response = await fetch('/api/wallet/balance', {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -43,7 +47,7 @@
     <div class="recent-transactions">
       <h3>Recent Transactions</h3>
       <ul>
-        {#each wallet.transactions as transaction}
+        {#each wallet.transactions as transaction (transaction.id)}
           <li>
             <p>Amount: {transaction.amount} BTC</p>
             <p>Date: {transaction.date}</p>

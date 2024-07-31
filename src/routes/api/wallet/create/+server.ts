@@ -20,6 +20,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
     // For now, let's just return a success response
     return json({ message: 'Neucron instance created' }, { status: 200 });
+    
   } catch (error) {
     console.error('Error creating wallet:', error);
     return json({ error: error.message }, { status: 500 });
