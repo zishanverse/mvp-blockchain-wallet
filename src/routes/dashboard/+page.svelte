@@ -40,21 +40,19 @@
   });
 </script>
 
-<template>
-  <div class="dashboard">
-    {#if loading}
-      <p>Loading...</p>
-    {:else if error}
-      <p class="error">{error}</p>
-    {:else}
-      <div class="profile">
-        <h2>Welcome, {user.name}</h2>
-        <p>Email: {user.email}</p>
-        <!-- Add more user information here -->
-      </div>
-    {/if}
-  </div>
-</template>
+<div class="dashboard">
+  {#if loading}
+    <p>Loading...</p>
+  {:else if error}
+    <p class="error">{error}</p>
+  {:else if user}
+    <div class="profile">
+      <h2>Welcome, {user.name}</h2>
+      <p>Email: {user.email}</p>
+      <!-- Add more user information here -->
+    </div>
+  {/if}
+</div>
 
 <style>
   .dashboard {
