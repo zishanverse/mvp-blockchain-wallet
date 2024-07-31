@@ -8,12 +8,7 @@ dotenv.config();
 const config = {
   preprocess: vitePreprocess(),
   kit: {
-    adapter: adapter(),
-    vite: {
-      define: {
-        'process.env.JWT_SECRET': JSON.stringify(process.env.JWT_SECRET)
-      }
-    }
+    adapter: adapter()
   }
 };
 

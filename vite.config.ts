@@ -1,6 +1,14 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import dotenv from 'dotenv';
 
-export default defineConfig({
-	plugins: [sveltekit()]
-});
+dotenv.config();
+
+/** @type {import('vite').UserConfig} */
+const config = {
+  plugins: [sveltekit()],
+  define: {
+    'process.env.JWT_SECRET': JSON.stringify(process.env.JWT_SECRET)
+  }
+};
+
+export default config;

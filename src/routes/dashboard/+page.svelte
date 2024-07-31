@@ -1,14 +1,19 @@
-<script>
+<script lang="ts">
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
 
-  let user = null;
-  let errorMessage = '';
+  let user: any = null;
+  let loading: boolean = true;
+  let error: string | null = null;
 
   onMount(async () => {
     try {
       const token = localStorage.getItem('authToken');
+      console.log('Token:', token); // Log token
+
       if (!token) {
-        throw new Error('No auth token found');
+        goto('/login'); // Redirect to login if no token is found
+        return;
       }
 
       const response = await fetch('/api/user/profile', {
@@ -17,33 +22,50 @@
         }
       });
 
+      console.log('Response Status:', response.status); // Log response status
+
       if (!response.ok) {
-        throw new Error(`Fetch error: ${response.statusText}`);
+        const errorText = await response.text();
+        throw new Error('Fetch error: ' + errorText);
       }
 
       user = await response.json();
-    } catch (error) {
-      errorMessage = error.message;
-      console.error(errorMessage);
+      console.log('User Data:', user); // Log user data
+    } catch (err) {
+      error = err.message;
+      console.error('Error:', err); // Log the error
+    } finally {
+      loading = false;
     }
   });
 </script>
 
-{#if errorMessage}
-  <p>{errorMessage}</p>
-{/if}
+<template>
+  <div class="dashboard">
+    {#if loading}
+      <p>Loading...</p>
+    {:else if error}
+      <p class="error">{error}</p>
+    {:else}
+      <div class="profile">
+        <h2>Welcome, {user.name}</h2>
+        <p>Email: {user.email}</p>
+        <!-- Add more user information here -->
+      </div>
+    {/if}
+  </div>
+</template>
 
-{#if user}
-  <h1>Welcome, {user.email}</h1>
-  <nav>
-    <ul>
-      <li><a href="/dashboard/overview">Wallet Overview</a></li>
-      <li><a href="/dashboard/send">Send Cryptocurrency</a></li>
-      <li><a href="/dashboard/receive">Receive Cryptocurrency</a></li>
-      <li><a href="/dashboard/transactions">Transaction History</a></li>
-      <li><a href="/dashboard/settings">Account Settings</a></li>
-      <li><a href="/logout">Logout</a></li>
-    </ul>
-  </nav>
-  <slot></slot>
-{/if}
+<style>
+  .dashboard {
+    padding: 20px;
+  }
+
+  .profile {
+    margin-top: 20px;
+  }
+
+  .error {
+    color: red;
+  }
+</style>
