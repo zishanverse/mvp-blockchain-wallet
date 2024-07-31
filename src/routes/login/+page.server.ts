@@ -1,13 +1,14 @@
 import { db } from '$lib/database'; // Ensure the correct path to your database module
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { fail, redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
   login: async ({ request }) => {
     const formData = await request.formData();
-    const email = formData.get('email');
-    const password = formData.get('password');
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
 
     const user = await db.query('SELECT * FROM users WHERE email = $1', [email]);
 
@@ -21,7 +22,11 @@ export const actions = {
       return fail(400, { email, incorrect: true });
     }
 
-    // Redirect the user to the dashboard after successful login
-    throw redirect(303, '/dashboard');
+    const token = jwt.sign({ userId: user.rows[0].id }, process.env.JWT_SECRET!, { expiresIn: '1h' });
+
+    return new Response(JSON.stringify({ token }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 };
