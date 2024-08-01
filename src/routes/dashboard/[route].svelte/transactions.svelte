@@ -1,6 +1,6 @@
 <!-- <script lang="ts">
   import { onMount } from 'svelte';
-  import { Neucron } from 'neucron-sdk';
+  import  Neucron  from 'neucron-sdk';
 
   let transactions = [];
   let loading: boolean = true;
@@ -53,6 +53,8 @@
 <style>
   .transaction-history {
     padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
   }
   ul {
     list-style-type: none;

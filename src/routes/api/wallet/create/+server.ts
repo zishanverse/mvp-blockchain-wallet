@@ -16,9 +16,12 @@ export const POST: RequestHandler = async ({ request }) => {
     console.dir(neucron, { depth: null }); // Log the instance with more detail
 
     // Assuming 'createWallet' is the correct method (replace with the actual method name)
-    // const wallet = await neucron.createWallet(); // Replace with the correct method
+    //  const wallet = await neucron.createWallet(); // Replace with the correct method
+    //  const walletAddress = wallet.getAddress();
+    //  const seedPhrase = wallet.getSeedPhrase();
 
-    // For now, let's just return a success response
+    // // For now, let's just return a success response
+    // return json({ walletAddress, seedPhrase }, { status: 200 });
     return json({ message: 'Neucron instance created' }, { status: 200 });
     
   } catch (error) {
