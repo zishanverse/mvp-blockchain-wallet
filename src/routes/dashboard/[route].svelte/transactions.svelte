@@ -1,4 +1,7 @@
 <!-- <script lang="ts">
+  import { onMount } from 'svelte';
+  import  Neucron  from 'neucron-sdk';
+
   let transactions = [];
   let loading: boolean = true;
   let error: string | null = null;
@@ -6,18 +9,16 @@
   onMount(async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch('/api/wallet/transactions', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error('Fetch error: ' + errorText);
+      if (!token) {
+        throw new Error('Authentication token not found');
       }
 
-      const result = await response.json();
+      // Initialize Neucron SDK
+      const neucron = new Neucron({ authToken: token });
+
+      // Fetch transactions using Neucron SDK
+      const result = await neucron.wallet.getTransactions();
+
       transactions = result.transactions;
     } catch (err) {
       error = err.message;
@@ -39,7 +40,7 @@
         <li>
           <p>Transaction ID: {transaction.transactionId}</p>
           <p>Amount: {transaction.amount} BTC</p>
-          <p>Date: {transaction.date}</p>
+          <p>Date: {new Date(transaction.date).toLocaleString()}</p>
           <p>Sender: {transaction.senderAddress}</p>
           <p>Recipient: {transaction.recipientAddress}</p>
           <p>Status: {transaction.status}</p>
@@ -52,6 +53,8 @@
 <style>
   .transaction-history {
     padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
   }
   ul {
     list-style-type: none;
@@ -59,6 +62,8 @@
   }
   li {
     margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
   }
   .error {
     color: red;

@@ -8,8 +8,10 @@
   onMount(async () => {
     try {
       const token = localStorage.getItem('authToken');
+
       const walletId = localStorage.getItem("walletId");
       const formData = new URLSearchParams({walletId}).toString();
+
       const response = await fetch('/api/wallet/balance', {
         method: 'POST',
         headers: {
@@ -48,7 +50,7 @@
     <div class="recent-transactions">
       <h3>Recent Transactions</h3>
       <ul>
-        {#each wallet.transactions as transaction}
+        {#each wallet.transactions as transaction }
           <li>
             <a href="https://whatsonchain.com/tx/{transaction.txid}">txid: {transaction.txid}</a>
             <p>Amount: {transaction.input_satoshis} satoshis</p>

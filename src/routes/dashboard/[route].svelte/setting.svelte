@@ -1,4 +1,4 @@
-<!-- <script lang="ts">
+<script lang="ts">
   import { onMount } from 'svelte';
 
   let email: string = '';
@@ -45,13 +45,12 @@
     try {
       const token = localStorage.getItem('authToken');
       const response = await fetch('/api/user/profile', {
-        method: 'POST',
+        method: 'PUT', // Change method to PUT
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          email,
           password
         })
       });
@@ -64,7 +63,7 @@
         throw new Error('Fetch error: ' + responseText);
       }
 
-      successMessage = 'Account settings updated successfully.';
+      successMessage = 'Password updated successfully.';
     } catch (err) {
       error = err.message;
     } finally {
@@ -77,7 +76,7 @@
   <h2>Account Settings</h2>
   <div>
     <label for="email">Email:</label>
-    <input id="email" type="email" bind:value={email} />
+    <input id="email" type="email" bind:value={email} disabled />
   </div>
   <div>
     <label for="password">New Password:</label>
@@ -87,8 +86,8 @@
     <label for="confirmPassword">Confirm Password:</label>
     <input id="confirmPassword" type="password" bind:value={confirmPassword} />
   </div>
-  <button on:click={updateSettings} disabled={loading}>
-    {#if loading} Updating... {:else} Update Settings {/if}
+  <button class="update-button" on:click={updateSettings} disabled={loading}>
+    {#if loading} Updating... {:else} Update Password {/if}
   </button>
 
   {#if error}
@@ -103,11 +102,36 @@
 <style>
   .account-settings {
     padding: 20px;
+    max-width: 400px;
+    margin: auto;
   }
   .error {
     color: red;
+    margin-top: 10px;
   }
   .success {
     color: green;
+    margin-top: 10px;
   }
-</style> -->
+  .update-button {
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+  }
+  .update-button:hover {
+    background-color: #0056b3;
+  }
+  .update-button:disabled {
+    background-color: #a0a0a0;
+    cursor: not-allowed;
+  }
+</style>

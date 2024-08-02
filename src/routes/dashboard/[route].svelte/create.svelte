@@ -42,6 +42,7 @@
       }
     }
 
+
     const saveSeed = () => {
       localStorage.setItem("seed", wallet.seedPhrase);
     }

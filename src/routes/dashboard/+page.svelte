@@ -14,7 +14,7 @@
 
   let activeComponent = 'overview'; // Default to Wallet Overview
 
-  const setActiveComponent = (component) => {
+  const setActiveComponent = (component: string) => {
     activeComponent = component;
   };
 
@@ -66,7 +66,7 @@
         <button class="nav-button" on:click={() => setActiveComponent('overview')}>Wallet Overview</button>
         <button class="nav-button" on:click={() => setActiveComponent('send')}>Send</button>
         <button class="nav-button" on:click={() => setActiveComponent('receive')}>Receive</button>
-        <button class="nav-button" on:click={() => setActiveComponent('transactions')}>Transactions</button>
+        <button class="nav-button" on:click={() => setActiveComponent('transactions')}>Transaction History</button>
         <button class="nav-button" on:click={() => setActiveComponent('settings')}>Settings</button>
       </nav>
       <div class="content">
