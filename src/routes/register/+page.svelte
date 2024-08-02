@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { invalidate } from '$app/navigation';
-
+  import { goto } from '$app/navigation';
   let name = '';
   let email = '';
   let password = '';
@@ -24,6 +24,7 @@
     }
 
     invalidate();
+    goto('/login');
   }
 </script>
 

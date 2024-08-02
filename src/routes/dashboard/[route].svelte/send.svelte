@@ -1,6 +1,7 @@
-<!-- <script lang="ts">
+ <script lang="ts">
   let recipientAddress: string = '';
   let amount: number = 0;
+  let Note: string = "gurudakshina";
   let loading: boolean = false;
   let error: string | null = null;
   let successMessage: string | null = null;
@@ -16,11 +17,12 @@
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: JSON.stringify({
           recipientAddress,
-          amount
+          amount,
+          Note
         })
       });
 
@@ -49,6 +51,10 @@
     <label for="amount">Amount:</label>
     <input id="amount" type="number" bind:value={amount} />
   </div>
+  <div>
+    <label for="note">Note:</label>
+    <input id="note" type="text" bind:value={Note} />
+  </div>
   <button on:click={sendCrypto} disabled={loading}>
     {#if loading} Sending... {:else} Send {/if}
   </button>
@@ -72,4 +78,4 @@
   .success {
     color: green;
   }
-</style> -->
+</style>

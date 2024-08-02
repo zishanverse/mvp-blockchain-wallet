@@ -30,6 +30,6 @@ export const GET: RequestHandler = async ({ request }) => {
     });
   } catch (error) {
     console.error('Error fetching user profile:', error);
-    return new Response('Internal Server Error', { status: 500 });
+    return new Response(`${error}`, { status: 500 });
   }
 };

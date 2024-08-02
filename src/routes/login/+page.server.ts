@@ -2,6 +2,7 @@ import { db } from '$lib/database'; // Ensure the correct path to your database 
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { fail, redirect } from '@sveltejs/kit';
+import {neucron, authModule} from '$lib/neucron'
 
 /** @type {import('./$types').Actions} */
 export const actions = {
@@ -21,6 +22,8 @@ export const actions = {
     if (!valid) {
       return fail(400, { email, incorrect: true });
     }
+    const loginResponse = await authModule.login({ email: email, password: password });
+    console.log(loginResponse);
 
     const token = jwt.sign({ userId: user.rows[0].id }, process.env.JWT_SECRET!, { expiresIn: '1h' });
 

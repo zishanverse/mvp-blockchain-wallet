@@ -1,4 +1,4 @@
-<!-- <script lang="ts">
+<script lang="ts">
   import { onMount } from 'svelte';
 
   let wallet: any = null;
@@ -8,10 +8,15 @@
   onMount(async () => {
     try {
       const token = localStorage.getItem('authToken');
+      const walletId = localStorage.getItem("walletId");
+      const formData = new URLSearchParams({walletId}).toString();
       const response = await fetch('/api/wallet/balance', {
+        method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData
       });
 
       if (!response.ok) {
@@ -38,16 +43,16 @@
   {:else if wallet}
     <div class="balance">
       <h2>Wallet Balance</h2>
-      <p>{wallet.balance} BTC</p>
+      <p>{wallet.balance} Satoshis</p>
     </div>
     <div class="recent-transactions">
       <h3>Recent Transactions</h3>
       <ul>
         {#each wallet.transactions as transaction}
           <li>
-            <p>Amount: {transaction.amount} BTC</p>
-            <p>Date: {transaction.date}</p>
-            <p>Status: {transaction.status}</p>
+            <a href="https://whatsonchain.com/tx/{transaction.txid}">txid: {transaction.txid}</a>
+            <p>Amount: {transaction.input_satoshis} satoshis</p>
+            <p>Date: {transaction.time}</p>
           </li>
         {/each}
       </ul>
@@ -72,4 +77,4 @@
   .error {
     color: red;
   }
-</style> -->
+</style>
