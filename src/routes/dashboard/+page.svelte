@@ -21,7 +21,7 @@
   onMount(async () => {
     try {
       const token = localStorage.getItem('authToken');
-      console.log('Token:', token);
+      //console.log('Token:', token);
 
       if (!token) {
         goto('/login');
@@ -42,7 +42,7 @@
       }
 
       user = await response.json();
-      console.log('User Data:', user);
+      //console.log('User Data:', user);
     } catch (err) {
       error = err.message;
       console.error('Error:', err);

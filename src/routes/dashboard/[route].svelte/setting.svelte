@@ -38,7 +38,7 @@
 
     try {
       const forgotPasswordResponse = await authService.forgotPassword({ email });
-      console.log(forgotPasswordResponse);
+      //console.log(forgotPasswordResponse);
       successMessage = 'Password reset instructions have been sent to your email.';
     } catch (err) {
       error = err.message;

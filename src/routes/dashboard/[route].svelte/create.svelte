@@ -32,7 +32,7 @@
 
       wallet = await response.json();
       successMessage = 'Wallet created successfully. Please save your seed phrase securely.';
-      console.log('New WalletId:', wallet.walletAddress);
+      //console.log('New WalletId:', wallet.walletAddress);
       localStorage.setItem("walletId", wallet.walletID);
     } catch (err) {
       console.error(err);

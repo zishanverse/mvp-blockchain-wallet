@@ -20,7 +20,7 @@ export const POST: RequestHandler = async ({ request }) => {
       return new Response(JSON.stringify({ error: 'Invalid email or password' }), { status: 400 });
     }
     const loginResponse = await authModule.login({ email: email, password: password });
-    console.log(loginResponse);
+    
 
     const token = jwt.sign(
       { userId: user.rows[0].id },
