@@ -1,4 +1,4 @@
- <script lang="ts">
+<script lang="ts">
   let recipientAddress: string = '';
   let amount: number = 0;
   let Note: string = "gurudakshina";
@@ -43,19 +43,19 @@
 
 <div class="send-crypto">
   <h2>Send Cryptocurrency</h2>
-  <div>
+  <div class="form-group">
     <label for="recipient">Recipient Address:</label>
     <input id="recipient" type="text" bind:value={recipientAddress} />
   </div>
-  <div>
+  <div class="form-group">
     <label for="amount">Amount:</label>
     <input id="amount" type="number" bind:value={amount} />
   </div>
-  <div>
+  <div class="form-group">
     <label for="note">Note:</label>
     <input id="note" type="text" bind:value={Note} />
   </div>
-  <button on:click={sendCrypto} disabled={loading}>
+  <button class="send-button" on:click={sendCrypto} disabled={loading}>
     {#if loading} Sending... {:else} Send {/if}
   </button>
   
@@ -71,11 +71,69 @@
 <style>
   .send-crypto {
     padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
   }
+
+  .send-crypto h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  .send-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .send-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .send-button:hover:not(:disabled) {
+    background-color: #45a049;
+  }
+
   .error {
     color: red;
+    text-align: center;
+    margin-top: 20px;
   }
+
   .success {
     color: green;
+    text-align: center;
+    margin-top: 20px;
   }
 </style>
