@@ -9,16 +9,12 @@
     try {
       const token = localStorage.getItem('authToken');
 
-      const walletId = localStorage.getItem("walletId");
-      const formData = new URLSearchParams({walletId}).toString();
 
       const response = await fetch('/api/wallet/balance', {
-        method: 'POST',
+        method: 'GET',
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: formData
+          'Authorization': `Bearer ${token}`
+        }
       });
 
       if (!response.ok) {
@@ -27,7 +23,7 @@
       }
 
       wallet = await response.json();
-      console.log('Wallet Data:', wallet);
+      //console.log('Wallet Data:', wallet);
     } catch (err) {
       error = err.message;
       console.error('Error:', err);

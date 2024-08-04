@@ -28,7 +28,6 @@ export const POST: RequestHandler = async ({ request }) => {
               }
             ]
           };
-          console.log(options);
         
         const payResponse = await neucron.pay.txSpend(options);
 
