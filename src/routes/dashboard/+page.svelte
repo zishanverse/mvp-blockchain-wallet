@@ -6,7 +6,6 @@
   import SendCrypto from '../dashboard/[route].svelte/send.svelte';
   import ReceiveCrypto from '../dashboard/[route].svelte/receive.svelte';
   import TransactionHistory from '../dashboard/[route].svelte/transactions.svelte';
-  import Settings from '../dashboard/[route].svelte/setting.svelte';
 
   let user: any = null;
   let loading: boolean = true;
@@ -67,7 +66,6 @@
         <button class="nav-button" on:click={() => setActiveComponent('send')}>Send</button>
         <button class="nav-button" on:click={() => setActiveComponent('receive')}>Receive</button>
         <button class="nav-button" on:click={() => setActiveComponent('transactions')}>Transaction History</button>
-        <button class="nav-button" on:click={() => setActiveComponent('settings')}>Settings</button>
       </nav>
       <div class="content">
         {#if activeComponent === 'create'}
@@ -80,8 +78,6 @@
           <ReceiveCrypto />
         {:else if activeComponent === 'transactions'}
           <TransactionHistory />
-        {:else if activeComponent === 'settings'}
-          <Settings />
         {/if}
       </div>
     </div>
@@ -91,15 +87,31 @@
 <style>
   .dashboard {
     padding: 20px;
+    font-family: Arial, sans-serif;
   }
   .profile {
     margin-top: 20px;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  h2 {
+    margin-bottom: 10px;
+    color: #343a40;
+  }
+  p {
+    margin-bottom: 20px;
+    color: #495057;
   }
   nav {
     margin: 20px 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
   }
   .nav-button {
-    background-color: #4CAF50; /* Green */
+    background: linear-gradient(135deg, #ff6f61, #d04ed6); /* Gradient from red to purple */
     border: none;
     color: white;
     padding: 10px 20px;
@@ -110,10 +122,11 @@
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 12px;
-    transition: background-color 0.3s ease;
+    transition: background 0.3s ease, transform 0.2s;
   }
   .nav-button:hover {
-    background-color: #45a049;
+    background: linear-gradient(135deg, #d04ed6, #ff6f61); /* Reversed gradient */
+    transform: scale(1.05);
   }
   .content {
     margin-top: 20px;

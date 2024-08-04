@@ -1,9 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  import authService from '../api/auth/authservice'; // Update the path to your actual authService module
 
   let email = '';
   let password = '';
+  let loading = false;
+  let error: string | null = null;
+  let successMessage: string | null = null;
 
   async function loginUser(credentials) {
     try {
@@ -38,6 +42,26 @@
   async function handleSubmit(event: Event) {
     event.preventDefault();
     await loginUser({ email, password });
+  }
+
+  async function forgotPassword() {
+    loading = true;
+    error = null;
+    successMessage = null;
+
+    try {
+      if (!email.trim()) {
+        throw new Error('ValidationError: "email" is not allowed to be empty');
+      }
+
+      const forgotPasswordResponse = await authService.forgotPassword({ email });
+      console.log(forgotPasswordResponse);
+      successMessage = 'Password reset instructions have been sent to your email.';
+    } catch (err) {
+      error = err.message;
+    } finally {
+      loading = false;
+    }
   }
 </script>
 
@@ -100,6 +124,38 @@
           Login
         </button>
       </div>
+
+      <div>
+        <button
+          type="button"
+          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+          on:click={forgotPassword}
+          disabled={loading}
+        >
+          {#if loading} Sending... {:else} Forgot Password {/if}
+        </button>
+      </div>
+
+      {#if error}
+        <p class="error">{error}</p>
+      {/if}
+
+      {#if successMessage}
+        <p class="success">{successMessage}</p>
+      {/if}
     </form>
   </div>
 </div>
+
+<style>
+  .error {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+  }
+  .success {
+    color: green;
+    margin-top: 10px;
+    text-align: center;
+  }
+</style>
