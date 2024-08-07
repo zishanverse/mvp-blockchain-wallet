@@ -5,7 +5,7 @@
   let loading: boolean = false;
   let error: string | null = null;
   let successMessage: string | null = null;
-
+  let result:any;
   async function sendCrypto() {
     loading = true;
     error = null;
@@ -31,8 +31,8 @@
         throw new Error('Fetch error: ' + errorText);
       }
 
-      const result = await response.json();
-      successMessage = `Transaction successful: ${result.transactionId}`;
+      result = await response.json();
+      successMessage = "Transaction successful!";
     } catch (err) {
       error = err.message;
     } finally {
@@ -65,6 +65,7 @@
   
   {#if successMessage}
     <p class="success">{successMessage}</p>
+    <a href="https://whatsonchain.com/tx/{result.transactionId}">Check on whatsonchain, click on transaction id: <span class="link">{result.transactionId}</span></a>
   {/if}
 </div>
 
@@ -129,6 +130,10 @@
     color: red;
     text-align: center;
     margin-top: 20px;
+  }
+  .link {
+    color: blue;
+    text-decoration: underline;
   }
 
   .success {

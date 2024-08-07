@@ -23,7 +23,7 @@ export const GET: RequestHandler = async ({ request }) => {
         const walletHistory1 = await walletModule.getWalletHistory();
         
 
-        return new Response(JSON.stringify({ balance: DefaultWalletBalance.data.balance.confirmed, transactions: walletHistory1 }), {status: 200});
+        return new Response(JSON.stringify({ balance: DefaultWalletBalance.data.balance.summary, transactions: walletHistory1 }), {status: 200});
     }
     catch (error){  
         return new Response(JSON.stringify({message:`balance fetching failed!, error: ${error}`}), { status: 500 });
