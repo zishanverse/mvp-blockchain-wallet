@@ -1,4 +1,8 @@
 <script lang="ts">
+  import Navbar from '$lib/Navbar.svelte'
+  import Footer from '$lib/Footer.svelte'
+
+  import '../../app.css';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import authService from '../api/auth/authservice'; // Update the path to your actual authService module
@@ -64,6 +68,10 @@
     }
   }
 </script>
+
+
+
+<Navbar />
 
 <div class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full space-y-8">
@@ -146,6 +154,7 @@
     </form>
   </div>
 </div>
+<Footer />
 
 <style>
   .error {

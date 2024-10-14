@@ -1,4 +1,8 @@
 <script>
+  import Navbar from '$lib/Navbar.svelte'
+  import Footer from '$lib/Footer.svelte'
+
+  import '../../app.css';
   import { onMount } from 'svelte';
   import { invalidate } from '$app/navigation';
   import { goto } from '$app/navigation';
@@ -28,6 +32,7 @@
   }
 </script>
 
+<Navbar />
 <div class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full space-y-8">
     <div>
@@ -63,3 +68,4 @@
     <p class="mt-2 text-center text-sm text-gray-600">{message}</p>
   </div>
 </div>
+<Footer />

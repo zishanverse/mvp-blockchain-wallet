@@ -1,11 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-
+  export let data;
   let wallet: any = null;
   let loading: boolean = false;
   let error: string | null = null;
   let successMessage: string | null = null;
   let walletName = "";
+
+   
 
   async function createWallet() {
     loading = true;

@@ -3,6 +3,8 @@ import type { RequestHandler } from '@sveltejs/kit';
 import {walletModule} from '$lib/neucron';
 import jwt from 'jsonwebtoken';
 
+
+
 export const POST: RequestHandler = async ({ request }) => {
     try {
         const authHeader = request.headers.get('Authorization');

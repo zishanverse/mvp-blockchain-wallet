@@ -1,10 +1,18 @@
-<script>
-  let isLoggedIn = false;
+<script lang="ts">
 
+  import { onMount } from 'svelte';
+  let isLoggedIn = false;
+  let tokenJWT = null;
   function toggleLogin() {
     isLoggedIn = !isLoggedIn;
   }
-</script>
+
+  onMount(async () => {
+      const token = localStorage.getItem('authToken');
+      console.log('Token:', token);
+  });
+      
+</script> 
 
 <nav class="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white shadow-lg">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -41,6 +49,8 @@
           </a>
         </li>
       </ul>
+      
+      
     </div>
   </div>
 </nav>

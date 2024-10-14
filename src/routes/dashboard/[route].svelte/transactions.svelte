@@ -46,7 +46,7 @@
       <ul>
         {#each wallet.transactions as transaction }
           <li class="transaction-item">
-            <a href="https://whatsonchain.com/tx/{transaction.txid}" target="_blank">txid: {transaction.txid}</a>
+            <a href="https://whatsonchain.com/tx/{transaction.txid}" target="_blank">txid: {transaction.txid.substring(0, 50)}...</a>
             <p>Amount: {transaction.input_satoshis} satoshis</p>
             <p>Date: {new Date(transaction.time).toLocaleDateString()}</p>
           </li>

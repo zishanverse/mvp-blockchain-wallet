@@ -1,3 +1,14 @@
+<script>
+  import Navbar from '$lib/Navbar.svelte'
+  import Footer from '$lib/Footer.svelte'
+
+  import '../app.css';
+
+  
+</script>
+
+<Navbar />
+
 <section class="bg-white dark:bg-gray-900">
     <div class="py-12 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
       <div class="inline-flex items-center py-1 px-3 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700" role="alert">
@@ -28,4 +39,5 @@
       </div>
     </div>
   </section>
+  <Footer />
   
